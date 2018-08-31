@@ -248,7 +248,7 @@ module.exports = class LiterallyCanvas
     { clientWidth: containerWidth, clientHeight: containerHeight } = @containerEl
     xPan = containerWidth / 2 - clientX
     yPan = containerHeight / 2 - clientY
-    lc.setPan(xPan, yPan)
+    @setPan(xPan, yPan)
 
   # Pans to center a given shape
   panToShape: (shape) ->
@@ -285,7 +285,6 @@ module.exports = class LiterallyCanvas
     yScale = (@getDefaultImageRect().height / height) * yViewScale * offset
     scale = Math.min xScale, yScale
     @panToShape(shape)
-    console.log scale
     @setZoom (scale)
 
   setWatermarkImage: (newImage) ->
