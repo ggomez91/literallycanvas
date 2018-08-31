@@ -275,6 +275,19 @@ module.exports = class LiterallyCanvas
     @repaintAllLayers()
     @trigger('zoom', {oldScale: oldScale, newScale: @scale})
 
+  # Centers a shape and zooms enough to fit the shape to the defaultImageRect.
+  # offset is a factor to multiply the zoom. 1 fits the shape perfectly.
+  zoomToShape: (shape, offset = 1) ->
+    xViewScale = @containerEl.clientWidth / @getDefaultImageRect().width
+    yViewScale = @containerEl.clientHeight / @getDefaultImageRect().height
+    { x, y, width, height } = shape.getBoundingRect()
+    xScale = (@getDefaultImageRect().width / width) * xViewScale * offset
+    yScale = (@getDefaultImageRect().height / height) * yViewScale * offset
+    scale = Math.min xScale, yScale
+    @panToShape(shape)
+    console.log scale
+    @setZoom (scale)
+
   setWatermarkImage: (newImage) ->
     @watermarkImage = newImage
     util.addImageOnload newImage, => @repaintLayer('background')
